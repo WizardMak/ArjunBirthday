@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arjun's Birthday RSVP</title>
+  <style>
+    :root {
+      --bg: #071111;
+      --card: #101b1b;
+      --card2: #0b1717;
+      --gold: #d6b27c;
+      --gold2: #f1d6a1;
+      --text: #f7f3ec;
+      --muted: #c9c3ba;
+      --line: rgba(214,178,124,.28);
+      --error: #ffb4a8;
+      --ok: #b9f6c4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(214,178,124,.14), transparent 28rem),
+        radial-gradient(circle at bottom right, rgba(214,178,124,.09), transparent 26rem),
+        var(--bg);
+      line-height: 1.5;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 44px; }
+    .hero {
+      background:
+        radial-gradient(circle at 78% 46%, rgba(38,178,214,.16), transparent 18rem),
+        radial-gradient(circle at 86% 72%, rgba(214,178,124,.10), transparent 20rem),
+        linear-gradient(135deg, rgba(16,27,27,.97), rgba(6,15,15,.98));
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 80px rgba(0,0,0,.35);
+      padding: 36px;
+      position: relative;
+      min-height: 610px;
+      isolation: isolate;
+    }
+    .heroGrid {
+      display: block;
+      position: relative;
+      min-height: 538px;
+    }
+    .heroCopy {
+      position: relative;
+      z-index: 3;
+      max-width: 515px;
+      padding-right: 10px;
+    }
+    .heroDecor {
+      position: absolute;
+      z-index: 1;
+      right: 36px;
+      top: 52px;
+      width: min(42%, 390px);
+      height: 480px;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .celebrationOrb {
+      position: relative;
+      width: min(100%, 360px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid rgba(214,178,124,.28);
+      background:
+        radial-gradient(circle at 50% 48%, rgba(241,214,161,.16), transparent 38%),
+        radial-gradient(circle at 42% 35%, rgba(42,176,224,.18), transparent 34%),
+        linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+      box-shadow: 0 24px 80px rgba(0,0,0,.28), inset 0 0 70px rgba(214,178,124,.07);
+    }
+    .celebrationOrb:before {
+      content: "A";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: rgba(241,214,161,.92);
+      font-size: clamp(120px, 16vw, 190px);
+      font-weight: 900;
+      letter-spacing: -.08em;
+      text-shadow: 0 14px 50px rgba(0,0,0,.35);
+    }
+    .celebrationOrb:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 76px;
+      transform: translateX(-50%);
+      width: 104px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(241,214,161,.65), transparent);
+    }
+    .sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--gold2);
+      transform: rotate(45deg);
+      opacity: .9;
+      box-shadow: 0 0 22px rgba(241,214,161,.5);
+    }
+    .sparkle.s1 { right: 26px; top: 44px; }
+    .sparkle.s2 { left: 8px; top: 125px; width: 7px; height: 7px; opacity: .72; }
+    .sparkle.s3 { right: 60px; bottom: 110px; width: 8px; height: 8px; opacity: .78; }
+    .ring {
+      position: absolute;
+      border: 1px solid rgba(214,178,124,.20);
+      border-radius: 50%;
+      inset: -28px;
+    }
+    .ring.r2 { inset: 28px; border-color: rgba(42,176,224,.16); }
+    .hero:before {
+      content: "";
+      position: absolute;
+      inset: -82px auto auto -82px;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      border: 1px solid rgba(214,178,124,.18);
+      z-index: 0;
+    }
+    .hero:after {
+      content: "";
+      position: absolute;
+      right: 9%;
+      top: 8%;
+      width: 1px;
+      height: 80%;
+      background: linear-gradient(transparent, rgba(214,178,124,.13), transparent);
+      z-index: 0;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 8vw, 76px);
+      line-height: .95;
+      letter-spacing: -.04em;
+      position: relative;
+    }
+    .sub {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 720px;
+      position: relative;
+    }
+    .inviteLine {
+      margin-top: 18px;
+      color: var(--gold2);
+      font-weight: 800;
+      font-size: 17px;
+      position: relative;
+    }
+    .details {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      position: relative;
+    }
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.03);
+    }
+    .pill b { color: var(--gold2); display:block; margin-bottom: 2px; font-size: 13px; text-transform: uppercase; letter-spacing: .12em; }
+    .pill span { color: var(--text); }
+    .card {
+      margin-top: 24px;
+      background: rgba(16,27,27,.94);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: 0 18px 70px rgba(0,0,0,.24);
+    }
+    h2 { margin: 0 0 10px; color: var(--gold2); font-size: 24px; }
+    p.note { margin-top: 0; color: var(--muted); }
+    label { display: block; margin: 17px 0 7px; font-weight: 700; color: var(--gold2); }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid rgba(214,178,124,.33);
+      background: #081313;
+      color: var(--text);
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 16px;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--gold2); box-shadow: 0 0 0 3px rgba(214,178,124,.16); }
+    textarea { min-height: 110px; resize: vertical; }
+    .row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    .radioRow { display: flex; gap: 12px; flex-wrap: wrap; }
+    .radioChoice {
+      flex: 1 1 160px;
+      border: 1px solid rgba(214,178,124,.33);
+      border-radius: 16px;
+      padding: 14px;
+      background: #081313;
+      cursor: pointer;
+    }
+    .radioChoice input { width: auto; margin-right: 8px; }
+    .attendeeBox {
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px solid rgba(214,178,124,.22);
+      border-radius: 20px;
+      background: rgba(255,255,255,.025);
+    }
+    .attendeeTitle {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .hidden { display: none !important; }
+    .actions { display: flex; align-items:center; gap: 14px; flex-wrap:wrap; margin-top: 22px; }
+    button {
+      border: 0;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      color: #091313;
+      border-radius: 999px;
+      padding: 14px 24px;
+      font-weight: 900;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 8px 28px rgba(214,178,124,.22);
+    }
+    button:disabled { opacity:.65; cursor:not-allowed; }
+    .status { font-weight: 700; }
+    .ok { color: var(--ok); }
+    .err { color: var(--error); }
+    .small { color: var(--muted); font-size: 13px; margin-top: 8px; }
+    .footer { text-align:center; color: var(--muted); font-size: 13px; margin-top: 18px; }
+    @media (max-width: 820px) {
+      .heroDecor {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: 100%;
+        height: 260px;
+        margin-top: 22px;
+      }
+      .celebrationOrb { width: min(76vw, 260px); }
+      .heroCopy { max-width: none; }
+      .heroGrid { min-height: auto; }
+      .hero { min-height: auto; }
+    }
+    @media (max-width: 720px) {
+      .row, .details { grid-template-columns: 1fr; }
+      .hero { padding: 22px; border-radius: 22px; }
+      .card { padding: 20px; border-radius: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="heroGrid">
+        <div class="heroCopy">
+          <div class="eyebrow">You're invited</div>
+          <h1>Arjun's Birthday</h1>
+          <p class="sub">
+            Please join us for a special evening as we celebrate Arjun’s birthday with the people who mean the most to us.
+            There will be family, friends, laughter, good food and plenty of happy memories to make together.
+          </p>
+          <p class="inviteLine">
+            Kindly RSVP below and select a meal choice for each guest so we can confirm numbers with the restaurant and keep the evening running smoothly.
+          </p>
+          <div class="details">
+            <div class="pill"><b>Date</b><span>4 July 2026</span></div>
+            <div class="pill"><b>Time</b><span>6.30pm</span></div>
+            <div class="pill"><b>Venue</b><span>Bombay Meri Jaan</span></div>
+            <div class="pill"><b>RSVP by</b><span>28 June 2026</span></div>
+            <div class="pill"><b>Address</b><span>94 Victoria St, Richmond VIC 3121</span></div>
+          </div>
+        </div>
+        <div class="heroDecor" aria-hidden="true">
+          <div class="celebrationOrb">
+            <span class="ring r1"></span>
+            <span class="ring r2"></span>
+            <span class="sparkle s1"></span>
+            <span class="sparkle s2"></span>
+            <span class="sparkle s3"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>RSVP</h2>
+      <p class="note">Please confirm who will be attending and choose a thaali option for each guest. You can also leave a birthday message or upload a photo memory for Arjun.</p>
+
+      <form id="rsvpForm">
+        <label>Will you be attending?</label>
+        <div class="radioRow">
+          <label class="radioChoice"><input type="radio" name="attending" value="Yes" required /> Yes, we will attend</label>
+          <label class="radioChoice"><input type="radio" name="attending" value="No" required /> Sorry, we cannot attend</label>
+        </div>
+
+        <label for="contactName">Your name</label>
+        <input id="contactName" name="contactName" autocomplete="name" required />
+
+        <div id="yesOnly">
+          <label for="attendeeCount">How many attendees will be joining?</label>
+          <select id="attendeeCount" name="attendeeCount">
+            <option value="">Select number of attendees</option>
+            <option value="1">1 attendee</option>
+            <option value="2">2 attendees</option>
+            <option value="3">3 attendees</option>
+            <option value="4">4 attendees</option>
+            <option value="5">5 attendees</option>
+            <option value="6">6 attendees</option>
+            <option value="7">7 attendees</option>
+            <option value="8">8 attendees</option>
+          </select>
+
+          <div id="attendees"></div>
+
+          <label for="allergies">Any allergies or dietary requirements?</label>
+          <textarea id="allergies" name="allergies" placeholder="Optional"></textarea>
+        </div>
+
+        <label for="message">Birthday message for Arjun</label>
+        <textarea id="message" name="message" placeholder="Optional — write a birthday message or memory"></textarea>
+
+        <label for="photos">Upload photo memories</label>
+        <input id="photos" name="photos" type="file" accept="image/*" multiple />
+        <div class="small">Optional. You can upload up to 3 photos.</div>
+
+        <div class="actions">
+          <button id="submitBtn" type="submit">Submit RSVP</button>
+          <span id="status" class="status"></span>
+        </div>
+      </form>
+    </section>
+
+    <div class="footer">Thank you for helping us prepare for Arjun's special day.</div>
+  </div>
+
+<script>
+  // Paste your deployed Google Apps Script Web App URL below when you are ready to connect responses.
+  // It should end with /exec
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrLG0pTuuwvWnXeroh2tJCmy3Qw9G6N6bZoagDjTFOaeMgeKDNfdTPxSRRux5m25VgwQ/exec";
+
+  const THAALI_OPTIONS = [
+    "Vegetarian Thaali — Samosa + Kadhai Paneer. Includes entrée, main, plain naan, dal, rice, raita, papad, salad and dessert.",
+    "Chicken Thaali — Tandoori chicken + butter chicken. Includes entrée, main, plain naan, dal, rice, raita, papad, salad and dessert.",
+    "Mutton Thaali — Seekh kebab + mutton kolhapuri. Includes entrée, main, plain naan, dal, rice, raita, papad, salad and dessert.",
+    "Seafood Thaali — Tandoori prawns + Goan fish curry. Includes entrée, main, plain naan, dal, rice, raita, papad, salad and dessert."
+  ];
+
+  const attendeesWrap = document.getElementById("attendees");
+  const attendeeCount = document.getElementById("attendeeCount");
+  const yesOnly = document.getElementById("yesOnly");
+  const statusEl = document.getElementById("status");
+  const submitBtn = document.getElementById("submitBtn");
+
+  document.querySelectorAll('input[name="attending"]').forEach(r => {
+    r.addEventListener("change", () => {
+      const attending = document.querySelector('input[name="attending"]:checked')?.value;
+      yesOnly.classList.toggle("hidden", attending !== "Yes");
+      attendeeCount.required = attending === "Yes";
+      document.querySelectorAll("[data-attendee-input]").forEach(input => input.required = attending === "Yes");
+    });
+  });
+
+  attendeeCount.addEventListener("change", renderAttendees);
+
+  function renderAttendees() {
+    const count = Number(attendeeCount.value || 0);
+    attendeesWrap.innerHTML = "";
+    for (let i = 1; i <= count; i++) {
+      const box = document.createElement("div");
+      box.className = "attendeeBox";
+      box.innerHTML = `
+        <div class="attendeeTitle">Attendee ${i}</div>
+        <div class="row">
+          <div>
+            <label for="attendeeName_${i}">Name</label>
+            <input data-attendee-input id="attendeeName_${i}" name="attendeeName_${i}" required />
+          </div>
+          <div>
+            <label for="thaali_${i}">Thaali choice</label>
+            <select data-attendee-input id="thaali_${i}" name="thaali_${i}" required>
+              <option value="">Select thaali</option>
+              ${THAALI_OPTIONS.map(opt => `<option value="${escapeHtml(opt)}">${escapeHtml(opt)}</option>`).join("")}
+            </select>
+          </div>
+        </div>
+      `;
+      attendeesWrap.appendChild(box);
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  document.getElementById("rsvpForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    statusEl.className = "status";
+    statusEl.textContent = "";
+
+    if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("PASTE_YOUR")) {
+      statusEl.className = "status err";
+      statusEl.textContent = "Preview only: Google Sheet is not connected yet.";
+      return;
+    }
+
+    const attending = document.querySelector('input[name="attending"]:checked')?.value;
+    const count = attending === "Yes" ? Number(attendeeCount.value || 0) : 0;
+
+    const attendees = [];
+    for (let i = 1; i <= count; i++) {
+      attendees.push({
+        number: i,
+        name: document.getElementById(`attendeeName_${i}`).value.trim(),
+        thaaliChoice: document.getElementById(`thaali_${i}`).value
+      });
+    }
+
+    const files = Array.from(document.getElementById("photos").files || []);
+    if (files.length > 3) {
+      statusEl.className = "status err";
+      statusEl.textContent = "Please upload a maximum of 3 photos.";
+      return;
+    }
+
+    submitBtn.disabled = true;
+    statusEl.textContent = "Submitting...";
+
+    try {
+      const photos = [];
+      for (const file of files) {
+        photos.push(await compressImageToDataUrl(file, 1400, 0.78));
+      }
+
+      const payload = {
+        submittedAtLocal: new Date().toISOString(),
+        attending,
+        contactName: document.getElementById("contactName").value.trim(),
+        contactPhone: "",
+        contactEmail: "",
+        attendeeCount: count,
+        attendees,
+        allergies: document.getElementById("allergies").value.trim(),
+        message: document.getElementById("message").value.trim(),
+        photos
+      };
+
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+
+      statusEl.className = "status ok";
+      statusEl.textContent = "Thank you — your RSVP has been submitted.";
+      e.target.reset();
+      attendeesWrap.innerHTML = "";
+      yesOnly.classList.remove("hidden");
+    } catch (err) {
+      console.error(err);
+      statusEl.className = "status err";
+      statusEl.textContent = "Sorry, something went wrong. Please try again.";
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  function compressImageToDataUrl(file, maxSize, quality) {
+    return new Promise((resolve, reject) => {
+      if (!file.type.startsWith("image/")) {
+        reject(new Error("Only image files are allowed."));
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > height && width > maxSize) {
+            height = Math.round((height * maxSize) / width);
+            width = maxSize;
+          } else if (height >= width && height > maxSize) {
+            width = Math.round((width * maxSize) / height);
+            height = maxSize;
+          }
+
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const dataUrl = canvas.toDataURL("image/jpeg", quality);
+          resolve({
+            name: file.name.replace(/\.[^/.]+$/, "") + ".jpg",
+            type: "image/jpeg",
+            dataUrl
+          });
+        };
+        img.onerror = () => reject(new Error("Could not read image."));
+        img.src = reader.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+</script>
+</body>
+</html>

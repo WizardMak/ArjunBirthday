@@ -308,7 +308,7 @@
       </div>
     </section>
 
-    <section class="card">
+    <section class="card" id="rsvpCard">
       <h2>RSVP</h2>
       <p class="note">Please confirm who will be attending and choose a thaali option for each guest. You can also leave a birthday message or upload a photo memory for Arjun.</p>
 
@@ -482,11 +482,19 @@
         body: JSON.stringify(payload)
       });
 
-      statusEl.className = "status ok";
-      statusEl.textContent = "Thank you — your RSVP has been submitted.";
-      e.target.reset();
-      attendeesWrap.innerHTML = "";
-      yesOnly.classList.remove("hidden");
+      document.getElementById("rsvpCard").innerHTML = `
+        <div style="text-align:center; padding: 28px 12px;">
+          <div style="font-size:42px; margin-bottom:10px;">✨</div>
+          <h2 style="font-size:32px; margin-bottom:10px;">Thank you for your RSVP</h2>
+          <p class="note" style="max-width:620px; margin:0 auto 18px;">
+            We have received your response and meal choices. Thank you for helping us prepare for Arjun's special evening.
+          </p>
+          <p style="color: var(--gold2); font-weight:800; margin:0;">
+            We look forward to celebrating together.
+          </p>
+        </div>
+      `;
+      document.getElementById("rsvpCard").scrollIntoView({ behavior: "smooth", block: "center" });
     } catch (err) {
       console.error(err);
       statusEl.className = "status err";
